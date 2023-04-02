@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<featureModel>
+	<properties>
+		<graphics key="autolayoutconstraints" value="false"/>
+		<graphics key="legendposition" value="2423,277"/>
+		<graphics key="legendautolayout" value="false"/>
+		<graphics key="showconstraints" value="true"/>
+		<graphics key="showshortnames" value="false"/>
+		<graphics key="layout" value="horizontal"/>
+		<graphics key="showcollapsedconstraints" value="true"/>
+		<graphics key="legendhidden" value="false"/>
+		<graphics key="layoutalgorithm" value="1"/>
+	</properties>
+	<struct>
+		<and abstract="true" mandatory="true" name="cFE_6_7_0">
+			<and abstract="true" mandatory="true" name="Variant Features">
+				<graphics key="collapsed" value="false"/>
+				<and abstract="true" mandatory="true" name="TIME_CONFIGURATION_1_22_4">
+					<graphics key="collapsed" value="true"/>
+					<and abstract="true" name="TIME_SIGNAL_1_22_4_9">
+						<feature name="signal"/>
+					</and>
+					<alt abstract="true" mandatory="true" name="TIME_FORMAT_1_22_4_1">
+						<feature name="tai"/>
+						<feature name="utc"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="TONE_DATA_ORDER_1_22_4_3">
+						<feature name="at_tone_was"/>
+						<feature name="at_tone_will_be"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="TIME_SERVER_CLIENT_1_22_4_5">
+						<feature name="server"/>
+						<feature name="client"/>
+					</alt>
+					<and abstract="true" mandatory="true" name="VIRTUAL_MET_1_22_4_7">
+						<feature name="virtual_met"/>
+					</and>
+					<and abstract="true" mandatory="true" name="TIME_TONE_BYTE_ORDER_1_22_4_6">
+						<feature name="big_endian"/>
+					</and>
+					<and abstract="true" name="FAKE_TONE_1_22_4_2">
+						<feature name="fake_tone"/>
+					</and>
+					<and abstract="true" name="TIME_SOURCE_1_22_4_8">
+						<alt name="time_source">
+							<feature name="src_met"/>
+							<feature name="src_gps"/>
+							<feature name="src_time"/>
+						</alt>
+					</and>
+				</and>
+				<and abstract="true" mandatory="true" name="MSG_CCSDS_ENDIAN_CONFIGURATION">
+					<graphics key="collapsed" value="true"/>
+					<feature name="little_endian"/>
+				</and>
+			</and>
+			<and abstract="true" mandatory="true" name="System Properties">
+				<and abstract="true" mandatory="true" name="ES">
+					<graphics key="collapsed" value="false"/>
+					<and abstract="true" mandatory="true" name="ES_MEMORY_BLOCK">
+						<graphics key="collapsed" value="true"/>
+						<feature mandatory="true" name="es_mem_blk1"/>
+						<feature mandatory="true" name="es_mem_blk2"/>
+						<feature mandatory="true" name="es_mem_blk3"/>
+						<feature mandatory="true" name="es_mem_blk4"/>
+						<feature mandatory="true" name="es_mem_blk5"/>
+						<feature mandatory="true" name="es_mem_blk6"/>
+						<feature mandatory="true" name="es_mem_blk7"/>
+						<feature mandatory="true" name="es_mem_blk8"/>
+						<feature mandatory="true" name="es_mem_blk9"/>
+						<feature mandatory="true" name="es_mem_blk10"/>
+						<feature mandatory="true" name="es_mem_blk11"/>
+						<feature mandatory="true" name="es_mem_blk12"/>
+						<feature mandatory="true" name="es_mem_blk13"/>
+						<feature mandatory="true" name="es_mem_blk14"/>
+						<feature mandatory="true" name="es_mem_blk15"/>
+						<feature mandatory="true" name="es_mem_blk16"/>
+					</and>
+					<and abstract="true" mandatory="true" name="ES_CDS_MEMORY_BLOCK">
+						<graphics key="collapsed" value="true"/>
+						<feature mandatory="true" name="es_eds_mem_blk1"/>
+						<feature mandatory="true" name="es_eds_mem_blk2"/>
+						<feature mandatory="true" name="es_eds_mem_blk3"/>
+						<feature mandatory="true" name="es_eds_mem_blk4"/>
+						<feature mandatory="true" name="es_eds_mem_blk5"/>
+						<feature mandatory="true" name="es_eds_mem_blk6"/>
+						<feature mandatory="true" name="es_eds_mem_blk7"/>
+						<feature mandatory="true" name="es_eds_mem_blk8"/>
+						<feature mandatory="true" name="es_eds_mem_blk9"/>
+						<feature mandatory="true" name="es_eds_mem_blk10"/>
+						<feature mandatory="true" name="es_eds_mem_blk11"/>
+						<feature mandatory="true" name="es_eds_mem_blk12"/>
+						<feature mandatory="true" name="es_eds_mem_blk13"/>
+						<feature mandatory="true" name="es_eds_mem_blk14"/>
+						<feature mandatory="true" name="es_eds_mem_blk15"/>
+						<feature mandatory="true" name="es_eds_mem_blk16"/>
+					</and>
+					<and abstract="true" mandatory="true" name="ES_PLATFORM">
+						<graphics key="collapsed" value="true"/>
+						<feature mandatory="true" name="app_kill_timeout"/>
+						<feature mandatory="true" name="app_scan_rate"/>
+						<feature mandatory="true" name="cds_max_block_size"/>
+						<feature mandatory="true" name="cds_max_num_entries"/>
+						<feature mandatory="true" name="cds_size"/>
+						<feature mandatory="true" name="es_er_log_entries"/>
+						<feature mandatory="true" name="es_max_apps"/>
+						<feature mandatory="true" name="es_max_blk_size"/>
+						<feature mandatory="true" name="es_max_libs"/>
+						<feature mandatory="true" name="es_max_proc_resets"/>
+						<feature mandatory="true" name="es_mempool_align_size_min"/>
+						<feature mandatory="true" name="es_obj_tbl_size"/>
+						<feature mandatory="true" name="es_perf_data_buf_size"/>
+						<feature mandatory="true" name="es_ramdisk_num_sectors"/>
+						<feature mandatory="true" name="es_ramdisk_percent_resv"/>
+						<feature mandatory="true" name="es_ramdisk_sector_size"/>
+						<feature mandatory="true" name="es_task_stack_size"/>
+						<feature mandatory="true" name="es_sys_log_size"/>
+						<feature mandatory="true" name="es_user_resv_size"/>
+						<feature mandatory="true" name="es_default_stack_size"/>
+						<feature mandatory="true" name="es_default_syslog_mode"/>
+					</and>
+					<and abstract="true" mandatory="true" name="ES_MISSION">
+						<graphics key="collapsed" value="true"/>
+						<feature mandatory="true" name="es_cds_max_fullname_len"/>
+						<feature mandatory="true" name="es_cds_max_name_len"/>
+						<feature mandatory="true" name="es_perf_max_ids"/>
+					</and>
+				</and>
+				<and abstract="true" mandatory="true" name="SB">
+					<graphics key="collapsed" value="false"/>
+					<and abstract="true" mandatory="true" name="SB_MEMORY_BLOCK">
+						<graphics key="collapsed" value="true"/>
+						<feature mandatory="true" name="sb_mem_blk1"/>
+						<feature mandatory="true" name="sb_mem_blk2"/>
+						<feature mandatory="true" name="sb_mem_blk3"/>
+						<feature mandatory="true" name="sb_mem_blk4"/>
+						<feature mandatory="true" name="sb_mem_blk5"/>
+						<feature mandatory="true" name="sb_mem_blk6"/>
+						<feature mandatory="true" name="sb_mem_blk7"/>
+						<feature mandatory="true" name="sb_mem_blk8"/>
+						<feature mandatory="true" name="sb_mem_blk9"/>
+						<feature mandatory="true" name="sb_mem_blk10"/>
+						<feature mandatory="true" name="sb_mem_blk11"/>
+						<feature mandatory="true" name="sb_mem_blk12"/>
+						<feature mandatory="true" name="sb_mem_blk13"/>
+						<feature mandatory="true" name="sb_mem_blk14"/>
+						<feature mandatory="true" name="sb_mem_blk15"/>
+						<feature mandatory="true" name="sb_mem_blk16"/>
+					</and>
+					<and abstract="true" mandatory="true" name="SB_PLATFORM">
+						<graphics key="collapsed" value="true"/>
+						<feature mandatory="true" name="sb_buf_mem_bytes"/>
+						<feature mandatory="true" name="sb_highest_valid_msgid"/>
+						<feature mandatory="true" name="sb_max_blk_size"/>
+						<feature mandatory="true" name="sb_max_dest_per_pkt"/>
+						<feature mandatory="true" name="sb_max_msg_ids"/>
+						<feature mandatory="true" name="sb_max_pipes"/>
+						<feature mandatory="true" name="sb_task_stack_size"/>
+						<feature mandatory="true" name="sb_default_msg_limit"/>
+					</and>
+					<and abstract="true" mandatory="true" name="SB_MISSION">
+						<graphics key="collapsed" value="true"/>
+						<feature mandatory="true" name="sb_max_msg_size"/>
+						<feature mandatory="true" name="sb_pkt_time_format"/>
+						<feature mandatory="true" name="sb_time_32_16_subs"/>
+					</and>
+				</and>
+				<and abstract="true" mandatory="true" name="TBL">
+					<and abstract="true" mandatory="true" name="TBL_PLATFORM">
+						<graphics key="collapsed" value="true"/>
+						<feature mandatory="true" name="tbl_buf_mem_bytes"/>
+						<feature mandatory="true" name="tbl_max_critical_tables"/>
+						<feature mandatory="true" name="tbl_max_dbl_table_size"/>
+						<feature mandatory="true" name="tbl_max_sngl_table_size"/>
+						<feature mandatory="true" name="tbl_task_stack_size"/>
+						<feature mandatory="true" name="tbl_max_num_handles"/>
+						<feature mandatory="true" name="tbl_max_num_tables"/>
+						<feature mandatory="true" name="tbl_max_sim_loads"/>
+						<feature mandatory="true" name="tbl_valid_prid_count"/>
+						<feature mandatory="true" name="tbl_valid_scid_count"/>
+					</and>
+					<and abstract="true" mandatory="true" name="TBL_MISSION">
+						<graphics key="collapsed" value="true"/>
+						<feature mandatory="true" name="tbl_max_fullname_len"/>
+						<feature mandatory="true" name="tbl_max_name_len"/>
+					</and>
+				</and>
+				<and abstract="true" mandatory="true" name="EVS">
+					<and abstract="true" mandatory="true" name="EVS_PLATFORM">
+						<graphics key="collapsed" value="true"/>
+						<feature mandatory="true" name="evs_app_events_per_sec"/>
+						<feature mandatory="true" name="evs_max_app_event_burst"/>
+						<feature mandatory="true" name="evs_port_default"/>
+						<feature mandatory="true" name="evs_start_task_stack_size"/>
+						<feature mandatory="true" name="evs_default_log_mode"/>
+						<feature mandatory="true" name="evs_default_msg_format_mode"/>
+						<feature mandatory="true" name="evs_default_type_flag"/>
+					</and>
+					<and abstract="true" mandatory="true" name="EVS_MISSION">
+						<graphics key="collapsed" value="true"/>
+						<feature mandatory="true" name="evs_max_port_msg_len"/>
+					</and>
+					<and abstract="true" mandatory="true" name="EVS_MSG_FORMAT">
+						<graphics key="collapsed" value="true"/>
+						<feature mandatory="true" name="long"/>
+						<feature mandatory="true" name="short"/>
+					</and>
+				</and>
+				<and abstract="true" mandatory="true" name="TIME">
+					<and abstract="true" mandatory="true" name="TIME_PLATFORM">
+						<graphics key="collapsed" value="true"/>
+						<feature mandatory="true" name="time_1hz_task_priority"/>
+						<feature mandatory="true" name="time_1hz_task_stack_size"/>
+						<feature mandatory="true" name="time_start_task_priority"/>
+						<feature mandatory="true" name="time_start_task_stack_size"/>
+						<feature mandatory="true" name="time_tone_task_priority"/>
+						<feature mandatory="true" name="time_tone_task_stack_size"/>
+					</and>
+				</and>
+				<and abstract="true" mandatory="true" name="MSG">
+					<and abstract="true" mandatory="true" name="MSG_PLATFORM">
+						<graphics key="collapsed" value="true"/>
+						<feature mandatory="true" name="edsver"/>
+						<feature mandatory="true" name="default_apid"/>
+						<feature mandatory="true" name="default_subsys"/>
+						<feature mandatory="true" name="ccsds_little_endian"/>
+					</and>
+					<and abstract="true" mandatory="true" name="MSG_MISSION">
+						<graphics key="collapsed" value="true"/>
+						<feature mandatory="true" name="ccsdsver"/>
+					</and>
+				</and>
+				<and abstract="true" mandatory="true" name="SBR">
+					<graphics key="collapsed" value="true"/>
+					<feature mandatory="true" name="sbr_msg_map_size"/>
+				</and>
+				<and abstract="true" mandatory="true" name="COMMON">
+					<and abstract="true" mandatory="true" name="MISSION">
+						<graphics key="collapsed" value="true"/>
+						<feature mandatory="true" name="max_api_len"/>
+						<feature mandatory="true" name="max_file_len"/>
+						<feature mandatory="true" name="max_path_len"/>
+					</and>
+				</and>
+				<and abstract="true" mandatory="true" name="OS">
+					<graphics key="collapsed" value="true"/>
+					<feature mandatory="true" name="int32_max"/>
+					<feature mandatory="true" name="uint32_max"/>
+					<feature mandatory="true" name="os_buffer_size"/>
+					<feature mandatory="true" name="os_max_queues"/>
+				</and>
+			</and>
+		</and>
+	</struct>
+	<constraints>
+		<rule>
+			<tags>Constraint Requirement ID: TIME-4</tags>
+			<imp>
+				<var>fake_tone</var>
+				<conj>
+					<var>virtual_met</var>
+					<not>
+						<var>time_source</var>
+					</not>
+				</conj>
+			</imp>
+		</rule>
+		<rule>
+			<tags>Constraint Requirement ID: TIME-13</tags>
+			<imp>
+				<var>time_source</var>
+				<var>server</var>
+			</imp>
+		</rule>
+		<rule>
+			<tags>Constraint Requirement ID: TIME-16</tags>
+			<imp>
+				<var>time_source</var>
+				<var>virtual_met</var>
+			</imp>
+		</rule>
+		<rule>
+			<tags>Constraint Requirement ID: TIME-17</tags>
+			<imp>
+				<var>fake_tone</var>
+				<var>at_tone_was</var>
+			</imp>
+		</rule>
+		<rule>
+			<tags>Constraint Requirement ID: TIME-10</tags>
+			<imp>
+				<var>client</var>
+				<var>virtual_met</var>
+			</imp>
+		</rule>
+	</constraints>
+</featureModel>
