@@ -1,0 +1,127 @@
+ID --> TIME-0 
+Valid --> 1
+Abstract --> TIME_CONFIGURATION_1_22_4 
+Concrete --> none 
+Logic --> root 
+Rule --> R1
+
+ID --> TIME1 
+Valid --> 1
+Abstract --> TIME_CONFIGURATION_1_22_4, TIME_FORMAT_1_22_4_1, FAKE_TONE_1_22_4_2, TONE_DATA_ORDER_1_22_4_3, TIME_SERVER_CLIENT_1_22_4_5, TIME_TONE_BYTE_ORDER_1_22_4_6, VIRTUAL_MET_1_22_4_7, TIME_SOURCE_1_22_4_8, TIME_SIGNAL_1_22_4_9 
+Concrete --> none 
+Logic --> (TIME_CONFIGURATION_1_22_4 IFF (TIME_FORMAT_1_22_4_1 AND TONE_DATA_ORDER_1_22_4_3 AND TIME_SERVER_CLIENT_1_22_4_5 AND VIRTUAL_MET_1_22_4_7 AND TIME_TONE_BYTE_ORDER_1_22_4_6)) AND ((FAKE_TONE_1_22_4_2 OR TIME_SOURCE_1_22_4_8 OR TIME_SIGNAL_1_22_4_9) IMPLY TIME_CONFIGURATION_1_22_4)
+Rule --> R6
+
+ID --> TIME-2
+Valid --> 1
+Abstract --> TIME_FORMAT_1_22_4_1
+Concrete -->  tai, utc
+Logic --> TIME_FORMAT_1_22_4_1 IFF (tai AND NOT utc) OR (NOT tai AND utc)
+Rule --> R4
+
+ID --> TIME-3
+Valid --> 1
+Abstract --> FAKE_TONE_1_22_4_2
+Concrete --> fake_tone
+Logic --> fake_tone IMPLY FAKE_TONE_1_22_4_2
+Rule --> R3
+
+ID --> TIME-4
+Valid --> 1
+Abstract --> FAKE_TONE_1_22_4_2
+Concrete --> fake_tone, virtual_met, source
+Logic --> fake_tone IMPLY (virtual_met AND NOT source)
+Rule --> R7
+
+ID --> TIME-5
+Valid --> 1
+Abstract --> TONE_DATA_ORDER_1_22_4_3
+Concrete --> at_tone_was, at_tone_will_be
+Logic --> TONE_DATA_ORDER_1_22_4_3 IFF (at_tone_was AND NOT at_tone_will_be) OR (NOT at_tone_was AND at_tone_will_be)
+Rule --> R4
+
+ID --> TIME-6
+Valid --> 1
+Abstract --> TIME_SERVER_CLIENT_1_22_4_5
+Concrete --> server, client
+Logic --> TIME_SERVER_CLIENT_1_22_4_5 IFF (server AND NOT client) OR (NOT server AND client)
+Rule --> R4
+
+ID --> TIME-7
+Valid --> 1
+Abstract --> TIME_SERVER_CLIENT_1_22_4_5
+Concrete --> server, processor_count==1
+Logic --> processor_count==1 IMPLY server
+Rule --> R7
+
+ID --> TIME-8
+Valid --> 1
+Abstract --> TIME_TONE_BYTE_ORDER_1_22_4_6
+Concrete --> big_endian
+Logic --> big_endian IMPLY TIME_TONE_BYTE_ORDER_1_22_4_6
+Rule --> R3
+
+ID --> TIME-9
+Valid --> 1
+Abstract --> VIRTUAL_MET_1_22_4_7
+Concrete --> virtual_met
+Logic --> virtual_met IMPLY VIRTUAL_MET_1_22_4_7
+Rule --> R3
+
+ID --> TIME-10
+Valid --> 1
+Abstract --> VIRTUAL_MET_1_22_4_7
+Concrete --> virtual_met, client
+Logic --> client IMPLY virtual_met
+Rule --> R7
+
+ID --> TIME-11
+Valid --> 1
+Abstract --> none
+Concrete --> server, virtual_met
+Logic --> server IMPLY virtual_met
+Rule --> R7
+
+ID --> TIME-12
+Valid --> 1
+Abstract --> TIME_SOURCE_1_22_4_8
+Concrete --> source
+Logic --> source IMPLY TIME_SOURCE_1_22_4_8
+Rule --> R3
+
+ID --> TIME-13
+Valid --> 1
+Abstract --> TIME_SOURCE_1_22_4_8
+Concrete --> source, server
+Logic --> source IMPLY server
+Rule --> R7
+
+ID --> TIME-14
+Valid --> 1
+Abstract --> TIME_SOURCE_1_22_4_8
+Concrete --> source, source_met, source_gps, source_time
+Logic --> source IFF (source_met AND NOT source_gps AND NOT source_time) OR (NOT source_met AND source_gps AND NOT source_time) OR (NOT source_met AND NOT source_gps AND source_time)
+Rule --> R4
+
+ID --> TIME-15
+Valid --> 1
+Abstract --> TIME_SIGNAL_1_22_4_9
+Concrete --> signal
+Logic --> signal IMPLY TIME_SIGNAL_1_22_4_9
+Rule --> R3
+
+ID --> TIME-16
+Valid --> 1
+Abstract --> none
+Concrete --> virtual_met, source
+Logic --> source IMPLY virtual_met
+Rule --> R7
+
+ID --> TIME-17
+Valid --> 1
+Abstract --> none
+Concrete --> fake_tone, at_tone_was
+Logic --> fake_tone IMPLY at_tone_was
+Rule --> R7
+
+
