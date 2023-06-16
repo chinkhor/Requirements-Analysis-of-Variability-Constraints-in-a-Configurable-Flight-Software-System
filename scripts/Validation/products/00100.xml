@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configuration>
-	<feature manual="selected" name="TIME_CONFIGURATION-1.22.4"/>
-	<feature manual="selected" name="TIME_FORMAT-1.22.4.1"/>
+	<feature manual="selected" name="TIME_CONFIGURATION_1_22_4"/>
+	<feature manual="selected" name="TIME_FORMAT_1_22_4_1"/>
 	<feature manual="selected" name="tai"/>
 	<feature manual="unselected" name="utc"/>
-	<feature manual="selected" name="TONE_DATA_ORDER-1.22.4.3"/>
-	<feature manual="selected" name="tone_first"/>
-	<feature manual="unselected" name="data_first"/>
-	<feature manual="selected" name="TIME_SERVER_CLIENT-1.22.4.5"/>
+	<feature manual="selected" name="TONE_DATA_ORDER_1_22_4_3"/>
+	<feature manual="selected" name="at_tone_was"/>
+	<feature manual="unselected" name="at_tone_will_be"/>
+	<feature manual="selected" name="TIME_SERVER_CLIENT_1_22_4_5"/>
 	<feature manual="selected" name="server"/>
 	<feature manual="unselected" name="client"/>
-	<feature manual="selected" name="VIRTUAL_MET-1.22.4.7"/>
+	<feature manual="selected" name="VIRTUAL_MET_1_22_4_7"/>
 	<feature manual="selected" name="virtual_met"/>
-	<feature manual="selected" name="TIME_TONE_BYTE_ORDER-1.22.4.6"/>
+	<feature manual="selected" name="TIME_TONE_BYTE_ORDER_1_22_4_6"/>
 	<feature manual="unselected" name="big_endian"/>
-	<feature manual="selected" name="FAKE_TONE_1.22.4.2"/>
+	<feature manual="selected" name="FAKE_TONE_1_22_4_2"/>
 	<feature manual="selected" name="fake_tone"/>
-	<feature manual="unselected" name="TIME_SOURCE-1.22.4.8"/>
-	<feature manual="unselected" name="external_source"/>
-	<feature manual="unselected" name="src_met"/>
-	<feature manual="unselected" name="src_gps"/>
-	<feature manual="unselected" name="src_time"/>
-	<feature manual="selected" name="TIME_SIGNAL-1.22.4.9"/>
+	<feature manual="unselected" name="TIME_SOURCE_1_22_4_8"/>
+	<feature manual="unselected" name="source"/>
+	<feature manual="unselected" name="source_met"/>
+	<feature manual="unselected" name="source_gps"/>
+	<feature manual="unselected" name="source_time"/>
+	<feature manual="selected" name="TIME_SIGNAL_1_22_4_9"/>
 	<feature manual="selected" name="signal"/>
 </configuration>
