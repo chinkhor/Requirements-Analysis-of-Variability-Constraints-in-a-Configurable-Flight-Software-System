@@ -24,7 +24,7 @@ class RTWToFM:
     def update(self, showTag):
         self.reset()
         self.processInput(self.data, showTag)
-    
+
     def processInput(self, table, showTag):
         self.data = table
         for index, row in self.data.iterrows():
@@ -311,24 +311,33 @@ class RTWToFM:
         with open(fileName, 'w') as f:
             f.write(self.XML)
     
-    def analysis(self, showTag):
-        flag = 0
+
+    def analysisBFS(self, showTag):
+        priorityQ = []
+        priorityQ.append(self.root)	
+        while len(priorityQ) > 0:
+            node = priorityQ.pop(0)
+            node.setVisited(True);
+            if node.hasChild():
+                children = node.getChildren()
+                for n in children:
+                    if not n.getVisited():
+                        priorityQ.append(n)
+        flag = 0	
         for element in self.elements:
             node = self.elements.get(element)
-            if node.parent == None and self.root != node:
+            if not node.getVisited():
                 flag = 1
                 if node.abstract:
                     print("Abstract Feature: " + node.name + " in ID: " + node.id + " is not defined")
                 else:
                     print("Concrete Feature: " + node.name + " in ID: " + node.id + " is not defined")
-                  
-                #for index in range(len(self.data)):
-                #    if self.data.loc[index,'id'] == node.id:
+        
                 index = self.data[self.data['id'] == node.id].index
                 self.data.loc[index,'valid'] = 0
         if flag:
             self.update(showTag)
-        
+
     # Debugging Purposes
     def display(self):
         print(self.XML)
@@ -420,7 +429,7 @@ class RTW:
     def convertToXML(self, outputFile, showTag=True):
         output = RTWToFM()
         output.processInput(self.data, showTag)
-        output.analysis(showTag)
+        output.analysisBFS(showTag)
         output.generateXMLFile(outputFile)
         
     def parenthesisMatch(self, string):
@@ -457,6 +466,13 @@ class Element:
         self.parent = None
         self.children = []
         self.id = None
+        self.visited = False
+
+    def setVisited(self, flag):
+        self.visited = flag
+
+    def getVisited(self):
+        return self.visited
         
     def setTagName(self, tagName: str):
         self.tagName = tagName
