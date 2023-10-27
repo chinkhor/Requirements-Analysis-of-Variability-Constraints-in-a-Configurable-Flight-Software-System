@@ -5,12 +5,61 @@ Concrete --> none
 Logic --> root 
 Rule --> R1
 
-ID --> TIME1 
+ID --> TIME-1.1 
 Valid --> 1
-Abstract --> TIME_CONFIGURATION_1_22_4, TIME_FORMAT_1_22_4_1, FAKE_TONE_1_22_4_2, TONE_DATA_ORDER_1_22_4_3, TIME_SERVER_CLIENT_1_22_4_5, TIME_TONE_BYTE_ORDER_1_22_4_6, VIRTUAL_MET_1_22_4_7, TIME_SOURCE_1_22_4_8, TIME_SIGNAL_1_22_4_9 
+Abstract --> TIME_CONFIGURATION_1_22_4, TIME_FORMAT_1_22_4_1 
 Concrete --> none 
-Logic --> (TIME_CONFIGURATION_1_22_4 IFF (TIME_FORMAT_1_22_4_1 AND TONE_DATA_ORDER_1_22_4_3 AND TIME_SERVER_CLIENT_1_22_4_5 AND VIRTUAL_MET_1_22_4_7 AND TIME_TONE_BYTE_ORDER_1_22_4_6)) AND ((FAKE_TONE_1_22_4_2 OR TIME_SOURCE_1_22_4_8 OR TIME_SIGNAL_1_22_4_9) IMPLY TIME_CONFIGURATION_1_22_4)
-Rule --> R6
+Logic --> TIME_CONFIGURATION_1_22_4 IFF TIME_FORMAT_1_22_4_1 
+Rule --> R2
+
+ID --> TIME-1.2
+Valid --> 1
+Abstract --> TIME_CONFIGURATION_1_22_4, TONE_DATA_ORDER_1_22_4_3
+Concrete --> none 
+Logic --> TIME_CONFIGURATION_1_22_4 IFF TONE_DATA_ORDER_1_22_4_3
+Rule --> R2
+
+ID --> TIME-1.3
+Valid --> 1
+Abstract --> TIME_CONFIGURATION_1_22_4, TIME_SERVER_CLIENT_1_22_4_5
+Concrete --> none 
+Logic --> TIME_CONFIGURATION_1_22_4 IFF TIME_SERVER_CLIENT_1_22_4_5
+Rule --> R2
+
+ID --> TIME-1.4 
+Valid --> 1
+Abstract --> TIME_CONFIGURATION_1_22_4, VIRTUAL_MET_1_22_4_7
+Concrete --> none 
+Logic --> VIRTUAL_MET_1_22_4_7 IMPLY TIME_CONFIGURATION_1_22_4
+Rule --> R3
+
+ID --> TIME-1.5 
+Valid --> 1
+Abstract --> TIME_CONFIGURATION_1_22_4, TIME_TONE_BYTE_ORDER_1_22_4_6
+Concrete --> none 
+Logic --> TIME_TONE_BYTE_ORDER_1_22_4_6 IMPLY TIME_CONFIGURATION_1_22_4
+Rule --> R3
+
+ID --> TIME-1.6 
+Valid --> 1
+Abstract --> TIME_CONFIGURATION_1_22_4, FAKE_TONE_1_22_4_2
+Concrete --> none 
+Logic --> FAKE_TONE_1_22_4_2 IMPLY TIME_CONFIGURATION_1_22_4
+Rule --> R3
+
+ID --> TIME-1.7 
+Valid --> 1
+Abstract --> TIME_CONFIGURATION_1_22_4, TIME_SOURCE_1_22_4_8
+Concrete --> none 
+Logic --> TIME_SOURCE_1_22_4_8 IMPLY TIME_CONFIGURATION_1_22_4
+Rule --> R3
+
+ID --> TIME-1.8
+Valid --> 1
+Abstract --> TIME_CONFIGURATION_1_22_4, TIME_SIGNAL_1_22_4_9
+Concrete --> none 
+Logic --> TIME_SIGNAL_1_22_4_9 IMPLY TIME_CONFIGURATION_1_22_4
+Rule --> R3
 
 ID --> TIME-2
 Valid --> 1
@@ -48,7 +97,7 @@ Logic --> TIME_SERVER_CLIENT_1_22_4_5 IFF (server AND NOT client) OR (NOT server
 Rule --> R4
 
 ID --> TIME-7
-Valid --> 1
+Valid --> 0
 Abstract --> TIME_SERVER_CLIENT_1_22_4_5
 Concrete --> server, processor_count==1
 Logic --> processor_count==1 IMPLY server
@@ -76,7 +125,7 @@ Logic --> client IMPLY virtual_met
 Rule --> R7
 
 ID --> TIME-11
-Valid --> 1
+Valid --> 0
 Abstract --> none
 Concrete --> server, virtual_met
 Logic --> server IMPLY virtual_met
@@ -102,6 +151,13 @@ Abstract --> TIME_SOURCE_1_22_4_8
 Concrete --> source, source_met, source_gps, source_time
 Logic --> source IFF (source_met AND NOT source_gps AND NOT source_time) OR (NOT source_met AND source_gps AND NOT source_time) OR (NOT source_met AND NOT source_gps AND source_time)
 Rule --> R4
+
+ID --> TIME-14.1
+Valid --> 0
+Abstract --> TIME_SOURCE_1_22_4_8
+Concrete --> source, source_met, source_gps, source_time
+Logic --> source IFF (source_met OR source_gps OR source_time) 
+Rule --> R5
 
 ID --> TIME-15
 Valid --> 1
