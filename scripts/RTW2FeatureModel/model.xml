@@ -1,91 +1,104 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<featureModel>
-	<properties>
-		<graphics key="autolayoutconstraints" value="false"/>
-		<graphics key="legendposition" value="1377,208"/>
-		<graphics key="legendautolayout" value="false"/>
-		<graphics key="showconstraints" value="true"/>
-		<graphics key="showshortnames" value="false"/>
-		<graphics key="layout" value="horizontal"/>
-		<graphics key="showcollapsedconstraints" value="true"/>
-		<graphics key="legendhidden" value="false"/>
-		<graphics key="layoutalgorithm" value="1"/>
-	</properties>
-	<struct>
-		<and abstract="true" mandatory="true" name="TIME_CONFIGURATION-1.22.4">
-			<alt abstract="true" mandatory="true" name="TIME_FORMAT-1.22.4.1">
-				<feature name="tai"/>
-				<feature name="utc"/>
-			</alt>
-			<alt abstract="true" mandatory="true" name="TONE_DATA_ORDER-1.22.4.3">
-				<feature name="tone_first"/>
-				<feature name="data_first"/>
-			</alt>
-			<alt abstract="true" mandatory="true" name="TIME_SERVER_CLIENT-1.22.4.5">
-				<feature name="server"/>
-				<feature name="client"/>
-			</alt>
-			<and abstract="true" mandatory="true" name="VIRTUAL_MET-1.22.4.7">
-				<feature name="virtual_met"/>
-			</and>
-			<and abstract="true" mandatory="true" name="TIME_TONE_BYTE_ORDER-1.22.4.6">
-				<feature name="big_endian"/>
-			</and>
-			<and abstract="true" name="FAKE_TONE_1.22.4.2">
-				<feature name="fake_tone"/>
-			</and>
-			<and abstract="true" name="TIME_SOURCE-1.22.4.8">
-				<alt name="external_source">
-					<feature name="src_met"/>
-					<feature name="src_gps"/>
-					<feature name="src_time"/>
-				</alt>
-			</and>
-			<and abstract="true" name="TIME_SIGNAL-1.22.4.9">
-				<feature name="signal"/>
-			</and>
-		</and>
-	</struct>
-	<constraints>
-		<rule>
-			<description>Constraint Requirement ID: TIME-4</description>
-			<imp>
-				<var>fake_tone</var>
-				<conj>
-					<var>virtual_met</var>
-					<not>
-						<var>external_source</var>
-					</not>
-				</conj>
-			</imp>
-		</rule>
-		<rule>
-			<description>Constraint Requirement ID: TIME-10</description>
-			<imp>
-				<var>client</var>
-				<var>virtual_met</var>
-			</imp>
-		</rule>
-		<rule>
-			<description>Constraint Requirement ID: TIME-13</description>
-			<imp>
-				<var>external_source</var>
-				<var>server</var>
-			</imp>
-		</rule>
-		<rule>
-			<description>Constraint Requirement ID: TIME-16</description>
-			<imp>
-				<var>external_source</var>
-				<var>virtual_met</var>
-			</imp>
-		</rule>
-		<rule>
-			<description>Constraint Requirement ID: TIME-17</description>
-			<imp>
-				<var>fake_tone</var>
-				<var>tone_first</var>
-			</imp>
-		</rule>
-	</constraints>
-</featureModel>
+                    <featureModel>
+                    	<properties>
+                    		<graphics key="autolayoutconstraints" value="false"/> 
+                    		<graphics key="legendposition" value="1223,200"/> 
+                    		<graphics key="legendautolayout" value="false"/> 
+                    		<graphics key="showconstraints" value="true"/> 
+                    		<graphics key="showshortnames" value="false"/> 
+                    		<graphics key="layout" value="horizontal"/> 
+                    		<graphics key="showcollapsedconstraints" value="true"/> 
+                    		<graphics key="legendhidden" value="false"/> 
+                    		<graphics key="layoutalgorithm" value="1"/> 
+                    	</properties> 
+                    	<struct>
+<and abstract="true" mandatory="true" name="TIME_CONFIGURATION_1_22_4">
+<alt abstract="true" mandatory="true" name="TIME_FORMAT_1_22_4_1">
+<feature name="tai"/>
+
+<feature name="utc"/>
+
+</alt>
+<alt abstract="true" mandatory="true" name="TONE_DATA_ORDER_1_22_4_3">
+<feature name="at_tone_was"/>
+
+<feature name="at_tone_will_be"/>
+
+</alt>
+<alt abstract="true" mandatory="true" name="TIME_SERVER_CLIENT_1_22_4_5">
+<feature name="server"/>
+
+<feature name="client"/>
+
+</alt>
+<and abstract="true" name="VIRTUAL_MET_1_22_4_7">
+<feature name="virtual_met"/>
+
+</and>
+<and abstract="true" name="TIME_TONE_BYTE_ORDER_1_22_4_6">
+<feature name="big_endian"/>
+
+</and>
+<and abstract="true" name="FAKE_TONE_1_22_4_2">
+<feature name="fake_tone"/>
+
+</and>
+<and abstract="true" name="TIME_SOURCE_1_22_4_8">
+<alt name="source">
+<feature name="source_met"/>
+
+<feature name="source_gps"/>
+
+<feature name="source_time"/>
+
+</alt>
+</and>
+<and abstract="true" name="TIME_SIGNAL_1_22_4_9">
+<feature name="signal"/>
+
+</and>
+</and>
+ </struct> 
+                    	<constraints>
+<rule> 
+<tags>Constraint Requirement ID: TIME-4</tags> 
+<imp> 
+<var>fake_tone</var>
+<conj>
+<var>virtual_met</var>
+<not>
+<var>source</var>
+</not>
+</conj>
+</imp> 
+</rule> 
+<rule> 
+<tags>Constraint Requirement ID: TIME-10</tags> 
+<imp> 
+<var>client</var>
+<var>virtual_met</var>
+</imp> 
+</rule> 
+<rule> 
+<tags>Constraint Requirement ID: TIME-13</tags> 
+<imp> 
+<var>source</var>
+<var>server</var>
+</imp> 
+</rule> 
+<rule> 
+<tags>Constraint Requirement ID: TIME-16</tags> 
+<imp> 
+<var>source</var>
+<var>virtual_met</var>
+</imp> 
+</rule> 
+<rule> 
+<tags>Constraint Requirement ID: TIME-17</tags> 
+<imp> 
+<var>fake_tone</var>
+<var>at_tone_was</var>
+</imp> 
+</rule> 
+ </constraints> 
+                    </featureModel>

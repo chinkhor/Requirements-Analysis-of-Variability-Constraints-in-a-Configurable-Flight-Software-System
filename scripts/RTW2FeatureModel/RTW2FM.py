@@ -12,6 +12,7 @@ class RTWToFM:
         self.constraint = ""
         self.root = None
         self.data = None
+        self.constraints_formula = []
     
     def reset(self):
         self.elements = {}
@@ -20,6 +21,7 @@ class RTWToFM:
         self.struct = ""
         self.constraint = ""
         self.root = None
+        self.constraints_formula = []
         
     def update(self, showTag):
         self.reset()
@@ -81,6 +83,11 @@ class RTWToFM:
             child = self.getElementByName(placeholder.get(logic[1].strip()))
             child.setMandatory()
             parent.addChild(child)
+            parent.setRule(rule)
+            parent.private[child.name] = rule
+            # if parent has mutiple children, change the parent's rule to R6
+            if len(parent.children) > 1:
+                parent.setRule('R6')
             child.setParent(parent)
             
         elif rule == 'R3':
@@ -89,6 +96,11 @@ class RTWToFM:
             parent.setTagName("and")
             child = self.getElementByName(placeholder.get(logic[0].strip()))
             parent.addChild(child)
+            parent.setRule(rule)
+            parent.private[child.name] = rule
+            # if parent has mutiple children, change the parent's rule to R6
+            if len(parent.children) > 1:
+                parent.setRule('R6')
             child.setParent(parent)
             
         elif rule == 'R4':
@@ -96,6 +108,7 @@ class RTWToFM:
             var1 = logic.pop(self.findParentIndex(logic)).strip()
             parent = self.getElementByName(placeholder.get(var1))
             parent.setTagName("alt")
+            parent.setRule(rule)
             logic = logic[0].split("OR")
             var_arr = re.findall(r'\d+', logic[0])
             for var in var_arr:
@@ -108,6 +121,7 @@ class RTWToFM:
             var1 = logic.pop(self.findParentIndex(logic)).strip()
             parent = self.getElementByName(placeholder.get(var1))
             parent.setTagName("or")
+            parent.setRule(rule)
             var_arr = re.findall(r'\d+', logic[0])
             for var in var_arr:
                 child = self.getElementByName(placeholder.get(var))
@@ -134,8 +148,10 @@ class RTWToFM:
             
             parent1 = self.getElementByName(placeholder.get(var1))
             parent1.setTagName("and")
+            parent1.setRule(rule)
             parent2 = self.getElementByName(placeholder.get(var2))
             parent2.setTagName("and")
+            parent2.setRule(rule)
             var_arr1 = re.findall(r'\d+', clause1[0])
             var_arr2 = re.findall(r'\d+', clause2[0])
             for var in var_arr1:
@@ -174,8 +190,15 @@ class RTWToFM:
         self.struct += root.generateEndTag() + "\n"
        
     def generateXMLConstraint(self, ID, logic, placeholder, showTag):
-        self.constraint += "<rule> \n"
+        # Limitation: this tool only handles constraints in the following formats only:
+        # (1) A requires B, e.g. A -> B  
+        # (2) A excludes B, e.g. A -> not B
         
+        if "IMPLY" not in logic:
+            print("Unsupported constraint format : " + str(logic))
+            return
+        
+        self.constraint += "<rule> \n"
         if not showTag:
             tagContent = ""
         else:
@@ -186,74 +209,85 @@ class RTWToFM:
         logic = logic.split("IMPLY")
         
         var1 = logic.pop(0).strip()
-        
-        self.constraint += "<var>" + placeholder.get(var1) + "</var>\n"
-        if self.isCNF(logic[0]):
-            self.constraint += "<conj>\n"
-            logic = logic[0].split("AND")
-            
-            for clause in logic:
-                if "OR" in clause:
-                    self.handleDisjunction(clause, placeholder)
-                else:
-                    self.constraint += "<var>" + placeholder.get(clause.strip()) + "</var>\n"
-                    
-            self.constraint += "</conj>\n"
-            
-        elif self.isDNF(logic[0]):
-            self.constraint += "<disj>\n"
-            
-            logic = logic[0].split("OR")
-            
-            for clause in logic:
-                if "AND" in clause:
-                    self.handleConjunction(clause, placeholder)
-                else:
-                    self.constraint += "<var>" + placeholder.get(clause.strip()) + "</var>\n"
-                    
-            self.constraint += "</conj>\n"
-            
+        if "NOT" in var1:
+            var1 = re.search(r'\d+', var1).group()
+            self.constraint += "<not>\n"
+            self.constraint += "<var>" + placeholder.get(var1) + "</var>\n"
+            self.constraint += "</not>\n"
+            literal = "!" + placeholder.get(var1)
         else:
-            clause = logic[0].strip()
-            if "AND" in clause:
-                self.handleConjunction(clause, placeholder)
-                
-            elif "OR" in clause:
-                self.handleDisjunction(clause, placeholder)
+            self.constraint += "<var>" + placeholder.get(var1) + "</var>\n"
+            literal = placeholder.get(var1)
+        
+        clause = logic[0].strip()
+        if "AND" in clause:
+            formula = self.handleConjunction(clause, placeholder)
+        elif "OR" in clause:
+            formula = self.handleDisjunction(clause, placeholder)
+        else:
+            if "NOT" in clause:
+                clause = re.search(r'\d+', clause).group()
+                self.constraint += "<not>\n"
+                self.constraint += "<var>" + placeholder.get(clause) + "</var>\n"
+                self.constraint += "</not>\n"
+                formula = "!" + placeholder.get(clause)
             else:
                 self.constraint += "<var>" + placeholder.get(clause) + "</var>\n"
-                
+                formula = placeholder.get(clause)
+        formula = literal + " => " + formula
+        self.constraints_formula.append(formula)    
         self.constraint += "</imp> \n" 
         self.constraint += "</rule> \n"
         
     def handleConjunction(self, clause, placeholder):
         clause = clause.split("AND")
         self.constraint += "<conj>\n"
+        terms = []
         for var in clause:
             literal = re.search(r'\d+', var).group()
             if "NOT" in var:
                 self.constraint += "<not>\n"
                 self.constraint += "<var>" + placeholder.get(literal) + "</var>\n"
                 self.constraint += "</not>\n"
+                terms.append("!" + placeholder.get(literal))
             else:
                 self.constraint += "<var>" + placeholder.get(literal) + "</var>\n"
-                            
+                terms.append(placeholder.get(literal))
         self.constraint += "</conj>\n"
+        sentence = "("
+        for term in terms:
+            sentence = sentence + term + " && "
+        sentence = sentence[:-4] + ")"        
+        return sentence
         
     def handleDisjunction(self, clause, placeholder):
-        clause = re.findall(r'\d+', clause)
+        clause = clause.split("OR")
         self.constraint += "<disj>\n"
+        terms = []
         for var in clause:
-            self.constraint += "<var>" + placeholder.get(var) + "</var>\n"
+            literal = re.search(r'\d+', var).group()
+            if "NOT" in var:
+                self.constraint += "<not>\n"
+                self.constraint += "<var>" + placeholder.get(literal) + "</var>\n"
+                self.constraint += "</not>\n"
+                terms.append("!" + placeholder.get(literal))
+            else:
+                self.constraint += "<var>" + placeholder.get(literal) + "</var>\n"
+                terms.append(placeholder.get(literal))
         self.constraint += "</disj>\n"
-    
+        
+        sentence = "("
+        for term in terms:
+            sentence = sentence + term + " || "
+        sentence = sentence[:-4] + ")"        
+        return sentence
+        
     def isCNF(self, logic):
         if '(' in logic:
             while '(' in logic and ')' in logic:
                 left = logic.find("(")
                 right = logic.find(")")
                 logic = logic[:left] + "a" + logic[right+1:]
-                
         return "AND" in logic
         
     def isDNF(self, logic):
@@ -262,7 +296,6 @@ class RTWToFM:
                 left = logic.find("(")
                 right = logic.find(")")
                 logic = logic[:left] + "a" + logic[right+1:]
-                
         return "OR" in logic
     
     def findParentIndex(self, var_arr: list):
@@ -314,7 +347,7 @@ class RTWToFM:
 
     def analysisBFS(self, showTag):
         priorityQ = []
-        priorityQ.append(self.root)	
+        priorityQ.append(self.root)
         while len(priorityQ) > 0:
             node = priorityQ.pop(0)
             node.setVisited(True);
@@ -323,7 +356,7 @@ class RTWToFM:
                 for n in children:
                     if not n.getVisited():
                         priorityQ.append(n)
-        flag = 0	
+        flag = 0
         for element in self.elements:
             node = self.elements.get(element)
             if not node.getVisited():
@@ -338,6 +371,11 @@ class RTWToFM:
         if flag:
             self.update(showTag)
 
+    def showConstraintsFormula(self):
+        print("Formula: ")
+        for formula in self.constraints_formula:
+            print(formula)
+            
     # Debugging Purposes
     def display(self):
         print(self.XML)
@@ -350,7 +388,7 @@ class RTW:
     global logic_operators
     logic_operators = ['AND', 'OR', 'IFF', 'IMPLY', 'NOT']
     
-    def __init__(self):
+    def __init__(self, filename):
         data = {
             'id':[],
             'valid':[],
@@ -360,8 +398,11 @@ class RTW:
             'rule':[],
         }
         self.data = pd.DataFrame(data)
+        self.getDataFromFile(filename)
+        self.feature_model = RTWToFM()
+        self.feature_model.processInput(self.data, showTag=True)
+        
       
-    
     def getDataFromFile(self, fileName):
         with open(fileName, 'r') as f:
             ID = ""
@@ -427,10 +468,8 @@ class RTW:
             
             
     def convertToXML(self, outputFile, showTag=True):
-        output = RTWToFM()
-        output.processInput(self.data, showTag)
-        output.analysisBFS(showTag)
-        output.generateXMLFile(outputFile)
+        self.feature_model.analysisBFS(showTag)
+        self.feature_model.generateXMLFile(outputFile)
         
     def parenthesisMatch(self, string):
         stack = []
@@ -450,11 +489,7 @@ class RTW:
             return False
         return True
     
-    def display(self):
-        display(self.data)
-                
         
-    
 class Element:
     
     def __init__(self, tagName=None, name=None, abstract=False, mandatory=False, void=False):
@@ -467,13 +502,20 @@ class Element:
         self.children = []
         self.id = None
         self.visited = False
+        self.rule = None
+        self.private = {}
+        
+    def reset(self):
+        self.visited = False
+        self.rule = None
+        self.private = {}
 
     def setVisited(self, flag):
         self.visited = flag
 
     def getVisited(self):
-        return self.visited
-        
+        return self.visited    
+
     def setTagName(self, tagName: str):
         self.tagName = tagName
         
@@ -482,6 +524,9 @@ class Element:
         
     def setId(self, id: str):
         self.id = id
+        
+    def setRule(self, rule: str):
+        self.rule = rule
         
     def setAbstract(self):
         self.abstract = True
@@ -540,7 +585,5 @@ class Element:
         
         return XML
 
-    
-b = RTW()
-b.getDataFromFile("RTW.txt")
-b.convertToXML("model.xml", showTag=True)
+    def display(self):
+        print('tagName: {}, name: {}, id: {}, parent: {}, children: {}'.format(str(self.tagName), str(self.name), str(self.id), str(self.parent), str(self.children)))
